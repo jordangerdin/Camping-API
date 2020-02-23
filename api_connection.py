@@ -44,7 +44,8 @@ def get_map(lat, lon):
     return map_image.raw
 
 def get_lat_lon(place_name):
-    key = '24122d2069da4857acfb61e5b14be3f2'
+    # method for getting the lat and long from a place name.
+    key = os.environ.get('GEOCODING_KEY')
     url = 'https://api.opencagedata.com/geocode/v1/json'
 
     params = {'key' : key, 'q' : place_name}
@@ -52,8 +53,8 @@ def get_lat_lon(place_name):
     lat_lon = get_API_data(url, params)
     return lat_lon['results'][0]['geometry']
 
-#test_place_name = 'Minneapolis, MN'
-#print(get_lat_lon(test_place_name))
+test_place_name = 'Minneapolis, MN'
+print(get_lat_lon(test_place_name))
 
 """test_lat = 44.97997
 test_lon = -93.26384
