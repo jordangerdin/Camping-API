@@ -1,7 +1,7 @@
 from PIL import Image
 import requests
 import os
-
+import shutil
 def get_API_data(url, params):
     data = requests.get(url = url, params = params).json()
     return data
@@ -25,3 +25,20 @@ def get_weather_data(lat, lon):
     weather_data = get_API_data(url, params)
 
     return weather_data
+
+def get_map(lat, lon):
+    key = os.environ.get('MAP_KEY')
+    params = {'access_token' : key}
+    url = f'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{lon},{lat},10,0,0/600x600'
+
+    map_image = requests.get(url, params, stream=True) 
+    map_image.raw.decode_content = True
+
+    return map_image.raw
+
+"""test_lat = 44.97997
+test_lon = -93.26384
+
+map_img = Image.open(get_map(test_lat, test_lon))
+map_img.show()
+"""
