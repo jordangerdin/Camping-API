@@ -2,13 +2,16 @@ from PIL import Image
 import requests
 import os
 
-lat = 40.0274
-lon = -105.2519
-key = os.environ.get('HIKING_KEY')
+def get_API_data(url, params):
+    data = requests.get(url = url, params = params).json()
+    return data
 
-params = {'lat' : lat, 'lon' : lon, 'key' : key}
-url = 'https://www.hikingproject.com/data/get-trails'
+def get_hiking_data(lat, lon):
+    key = os.environ.get('HIKING_KEY')
+    url = 'https://www.hikingproject.com/data/get-trails'
 
-hiking_data = requests.get(url = url, params = params).json()
+    params = {'lat' : lat, 'lon' : lon, 'key' : key}
 
-print(hiking_data)
+    hiking_data = get_API_data(url, params)
+
+    return hiking_data
