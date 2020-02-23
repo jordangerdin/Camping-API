@@ -15,3 +15,13 @@ def get_hiking_data(lat, lon):
     hiking_data = get_API_data(url, params)
 
     return hiking_data
+
+def get_weather_data(lat, lon):
+    key = os.environ.get('WEATHER_KEY')
+    url = 'https://samples.openweathermap.org/data/2.5/forecast/daily'
+
+    params = {'lat' : lat, 'lon' : lon, 'cnt' : 10, 'appid' : key}
+
+    weather_data = get_API_data(url, params)
+
+    return weather_data
