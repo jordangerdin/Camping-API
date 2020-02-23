@@ -1,4 +1,3 @@
-from PIL import Image
 import requests
 import os
 import shutil
@@ -36,7 +35,7 @@ def get_map(lat, lon):
         # www.dev2qa.com/how-to-download-image-file-from-url-use-python-requests-or-wget-module/
     key = os.environ.get('MAP_KEY')
     params = {'access_token' : key}
-    url = f'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{lon},{lat},10,0,0/600x600'
+    url = f'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{lon},{lat},13,0,0/600x600'
 
     map_image = requests.get(url, params, stream=True) 
     map_image.raw.decode_content = True
@@ -53,8 +52,8 @@ def get_lat_lon(place_name):
     lat_lon = get_API_data(url, params)
     return lat_lon['results'][0]['geometry']
 
-test_place_name = 'Minneapolis, MN'
-print(get_lat_lon(test_place_name))
+#test_place_name = 'Minneapolis, MN'
+#print(get_lat_lon(test_place_name))
 
 """test_lat = 44.97997
 test_lon = -93.26384
