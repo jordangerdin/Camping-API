@@ -50,7 +50,10 @@ def get_lat_lon(place_name):
     params = {'key' : key, 'q' : place_name}
 
     lat_lon = get_API_data(url, params)
-    return lat_lon['results'][0]['geometry']
+    if lat_lon['results'] != []:
+        return lat_lon['results'][0]['geometry']
+    else:
+        return None
 
 #test_place_name = 'Minneapolis, MN'
 #print(get_lat_lon(test_place_name))

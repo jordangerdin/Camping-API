@@ -1,0 +1,77 @@
+<!--Template for the art table. 
+    On bottom is second form, to monitor the delete and change buttons.
+    When a checkbox is clicked, it stores the id of the art it's associated with. 
+    Clicking one of the submit buttons sends that list of ids and the button's value - change or delete - to gui.py -->
+    {% extends "layout.html" %}
+    {% block content %}
+        <!--<form method="POST" action="/show_map">  -->
+            <table>
+                <tr>
+                    <th>Trail Name</th>
+                    <th>Type</th>
+                    <th>Difficulty</th>
+                    <th>Stars</th>
+                    <th>Location</th>
+                    <th>Length</th>
+                    <th>Ascent</th>
+                    <th>Descent</th>
+                    <th>Condition</th>
+                    <th>Select</th>
+                    <th>More info</th>
+                </tr>
+                {% for trail in trail_list %}
+                    <tr>
+                        <td>{{trail.name}}</td>
+                        <td>{{trail.type}}</td>
+                        <td>{{trail.difficulty}}</td>
+                        <td>{{trail.stars}}</td>
+                        <td>{{trail.location}}</td>
+                        <td>{{trail.length}}</td>
+                        <td>{{trail.ascent}}</td>
+                        <td>{{trail.descent}}</td>
+                        <td>{{trail.conditionDetails}}</td>
+                        <td><input type="radio" id="{{trail.id}}" name="trail_select"></td>
+                        <td><a href="{{trail.url}}">X</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <!--<button name="submit_button" value="show_map" type="Submit"> Show Map </button> -->
+        </form>
+        <form method="POST" action="/find_trails">
+            {{ location_form.hidden_tag() }}
+                <fieldset>
+                    <legend>Find A Trail</legend>
+                    <div>
+                        {{ location_form.city.label() }}
+                        {% if location_form.city.errors %}
+                            {{ location_form.city() }}
+                            <div>
+                                {% for error in location_form.city.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ location_form.city() }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {{ location_form.state.label() }}
+                        {% if location_form.state.errors %}
+                            {{ location_form.state() }}
+                            <div>
+                                {% for error in location_form.state.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+        
+                        {% else %}
+                            {{ location_form.state() }}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div>
+                    {{ location_form.submit(class_="btn") }}
+                </div>
+           </form>  
+    {% endblock content %}  
+    
