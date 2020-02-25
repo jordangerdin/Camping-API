@@ -6,17 +6,18 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'blargitsasecretthatdoesntmatterforthiscontext'
 
+trail_dictionary = {}
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/find_trails', methods=['GET', 'POST'])
 def hello():
     loc_form = LocationInputForm()
-    trail_dictionary = {}
     if loc_form.validate_on_submit():
         location_name = loc_form.city.data + ', ' + loc_form.state.data
         try:
             coord = get_lat_lon(location_name)
             if coord is not None:
-                trail_dictionary = get_hiking_data(coord['lat'], coord['lng'])['trails']
+                trail_dictionay = get_hiking_data(coord['lat'], coord['lng'])['trails']
             else:
                 flash('test')
         except:
@@ -35,7 +36,6 @@ def show_extra():
             day['temp'][key] = k_to_f(temp)
 
     loc_form = LocationInputForm()
-    trail_dictionary = {}
     if loc_form.validate_on_submit():
         location_name = loc_form.city.data + ', ' + loc_form.state.data
         try:
