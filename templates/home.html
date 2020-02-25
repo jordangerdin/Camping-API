@@ -4,7 +4,7 @@
     Clicking one of the submit buttons sends that list of ids and the button's value - change or delete - to gui.py -->
     {% extends "layout.html" %}
     {% block content %}
-        <!--<form method="POST" action="/show_map">  -->
+        <form method="POST" action="/show_extra">
             <table>
                 <tr>
                     <th>Trail Name</th>
@@ -30,13 +30,15 @@
                         <td>{{trail.ascent}}</td>
                         <td>{{trail.descent}}</td>
                         <td>{{trail.conditionDetails}}</td>
-                        <td><input type="radio" id="{{trail.id}}" name="trail_select"></td>
+                        <td><input type="radio" id="{{trail.id}}" value="{{trail.latitude}},{{trail.longitude}}" name="trail_select"></td>
                         <td><a href="{{trail.url}}">X</a></td>
                     </tr>
                 {% endfor %}
             </table>
-            <!--<button name="submit_button" value="show_map" type="Submit"> Show Map </button> -->
+            <button name="submit_button" value="show_map" type="Submit"> Show Map </button>
+            <button name="submit_button" value="show_weather" type="Submit">Show Weather</button>
         </form>
+        {% block show_weather %}{% endblock show_weather %}
         <form method="POST" action="/find_trails">
             {{ location_form.hidden_tag() }}
                 <fieldset>

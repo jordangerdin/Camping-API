@@ -1,0 +1,29 @@
+<!-- The weather table  -->
+
+{% extends "home.html" %}
+{% block show_weather %}  
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Morning</th>
+        <th>Day</th>
+        <th>Evening</th>
+        <th>Night</th>
+        <th>High</th>
+        <th>Low</th>
+        <th>Weather</th>
+    </tr>
+    {% for time in weather_list.list %}
+        <tr>
+            <td>{{time.dt}}</td>
+            <td>{{time.temp.morn}}°F</td>
+            <td>{{time.temp.day}}°F</td>
+            <td>{{time.temp.eve}}°F</td>
+            <td>{{time.temp.night}}°F</td>
+            <td>{{time.temp.max}}°F</td>
+            <td>{{time.temp.min}}°F</td>
+            <td>{{time.weather[0].description}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock show_weather %}  
