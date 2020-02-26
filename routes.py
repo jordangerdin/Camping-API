@@ -46,20 +46,24 @@ def show_extra():
             flash('There was a problem connecting to the geocoding API ' + location_name + 'test')
 
     # Getting the lat and long of the trail
-    lat_long = request.form.get('trail_select')
-    lat_long_list = lat_long.split(',')
+    trail_id = request.form.get('trail_select')
+    for trail in trail_dictionary:
+        if int(trail['id']) == int(trail_id):
+            trail_lat  = trail['latitude']
+            trail_lon  = trail['longitude']
+            trail_name = trail['name']
 
     # The show weather set up. Makes an API call to get the weather for the next ten days and feeds that to the page
     if request.form['submit_button'] == 'show_weather':
-        weather_data = get_weather_data(lat_long_list[0],lat_long_list[1])
+        weather_data = get_weather_data(trail_lat, trail_lon)
         for time in weather_data['list']:
             time['dt'] = datetime.fromtimestamp(time['dt'])
             time['main']['temp'] = k_to_f(time['main']['temp'])
-        return render_template('show_weather.html', weather_list = weather_data, location_form = loc_form, trail_list = trail_dictionary)
+        return render_template('show_weather.html', weather_list = weather_data, location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
 
     # The show map set up 
     else:
-        return render_template('show_map.html', lat = lat_long_list[0], lon = lat_long_list[1], key = os.environ.get('MAP_KEY'), location_form = loc_form, trail_list = trail_dictionary)
+        return render_template('show_map.html', lat = trail_lat, lon = trail_lon, key = os.environ.get('MAP_KEY'), location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
 
 
 def k_to_f(kelvin):

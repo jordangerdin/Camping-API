@@ -2,7 +2,8 @@
 <!-- The area map  -->
 
 {% extends "home.html" %}
-{% block show_map %}  
+{% block show_map %} 
+<h1>Map of the area around {{trail_name}}</h1>
     <div id='map'></div>
     <script>
         mapboxgl.accessToken = '{{key}}'
