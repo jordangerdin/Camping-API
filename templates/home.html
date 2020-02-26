@@ -39,6 +39,7 @@
             <button name="submit_button" value="show_weather" type="Submit">Show Weather</button>
         </form>
         {% block show_weather %}{% endblock show_weather %}
+        {% block show_map %}{% endblock show_map %}
         <form method="POST" action="/find_trails">
             {{ location_form.hidden_tag() }}
                 <fieldset>

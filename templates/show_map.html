@@ -1,0 +1,16 @@
+
+<!-- The area map  -->
+
+{% extends "home.html" %}
+{% block show_map %}  
+    <div id='map'></div>
+    <script>
+        mapboxgl.accessToken = '{{key}}'
+        var map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+            center: [{{lon}}, {{lat}}], // starting position [lng, lat]
+            zoom: 12 // starting zoom
+        });
+    </script>    
+{% endblock show_map %}  
