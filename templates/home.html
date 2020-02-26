@@ -1,10 +1,9 @@
-<!--Template for the art table. 
-    On bottom is second form, to monitor the delete and change buttons.
-    When a checkbox is clicked, it stores the id of the art it's associated with. 
-    Clicking one of the submit buttons sends that list of ids and the button's value - change or delete - to gui.py -->
+<!--Template for the trail list. -->
     {% extends "layout.html" %}
     {% block content %}
         <form method="POST" action="/show_extra">
+            <!-- The actual table. Only shows once somone inputs a location into the bottom form.
+                 There's a radio box to select a trail once they are being displayed. This radio input sends routes.py the trails ID when the user requests a map or weather data. -->
             <table>
                 <tr>
                     <th>Trail Name</th>
@@ -42,6 +41,7 @@
         {% block show_map %}{% endblock show_map %}
         <form method="POST" action="/find_trails">
             {{ location_form.hidden_tag() }}
+            <!-- The find a trail form. User inputs city and state with some amount of verification from the form. -->
                 <fieldset>
                     <legend>Find A Trail</legend>
                     <div>
