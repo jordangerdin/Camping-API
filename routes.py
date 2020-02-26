@@ -52,10 +52,9 @@ def show_extra():
     # The show weather set up. Makes an API call to get the weather for the next ten days and feeds that to the page
     if request.form['submit_button'] == 'show_weather':
         weather_data = get_weather_data(lat_long_list[0],lat_long_list[1])
-        for day in weather_data['list']:
-            day['dt'] = datetime.fromtimestamp(day['dt'])
-            for key, temp in day['temp'].items():
-                day['temp'][key] = k_to_f(temp)
+        for time in weather_data['list']:
+            time['dt'] = datetime.fromtimestamp(time['dt'])
+            time['main']['temp'] = k_to_f(time['main']['temp'])
         return render_template('show_weather.html', weather_list = weather_data, location_form = loc_form, trail_list = trail_dictionary)
 
     # The show map set up 

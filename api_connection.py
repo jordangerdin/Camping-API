@@ -21,9 +21,9 @@ def get_hiking_data(lat, lon):
 def get_weather_data(lat, lon):
     # method for getting data on the weather
     key = os.environ.get('WEATHER_KEY')
-    url = 'https://samples.openweathermap.org/data/2.5/forecast/daily'
+    url = 'https://api.openweathermap.org/data/2.5/forecast'
 
-    params = {'lat' : lat, 'lon' : lon, 'cnt' : 10, 'appid' : key}
+    params = {'lat' : lat, 'lon' : lon, 'appid' : key}
 
     weather_data = get_API_data(url, params)
 
