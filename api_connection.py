@@ -23,9 +23,9 @@ def get_hiking_data(lat, lon):
 def get_weather_data(lat, lon):
     # method for getting data on the weather
     key = os.getenv('WEATHER_KEY')
-    url = 'https://samples.openweathermap.org/data/2.5/forecast/daily'
+    url = 'https://api.openweathermap.org/data/2.5/forecast'
 
-    params = {'lat' : lat, 'lon' : lon, 'cnt' : 10, 'appid' : key}
+    params = {'lat' : lat, 'lon' : lon, 'appid' : key}
 
     weather_data = get_API_data(url, params)
 
@@ -54,14 +54,3 @@ def get_lat_lon(place_name):
     lat_lon = get_API_data(url, params)
     return lat_lon['results'][0]['geometry']
 
-#test_place_name = 'Minneapolis, MN'
-#print(get_lat_lon(test_place_name))
-
-"""test_lat = 44.97997
-test_lon = -93.26384
-
-# The method used to open the map image. PIL must be imported to do this.
-
-map_img = Image.open(get_map(test_lat, test_lon))
-map_img.show()
-"""
