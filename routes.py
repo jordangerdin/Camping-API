@@ -11,7 +11,7 @@ trail_dictionary = {}
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/find_trails', methods=['GET', 'POST'])
-def hello():
+def home():
     # Gets the location info from the user through thte form, gives it to the geocoding API, gets the lat and long from it and feeds that to the hiking API
     # Hiking API returns a dictionary of trails that's saved in a global variable for future use and fed to the main page.
     global trail_dictionary
@@ -23,6 +23,8 @@ def hello():
             coord = get_lat_lon(location_name)
             if coord is not None:
                 trail_dictionary = get_hiking_data(coord['lat'], coord['lng'])['trails']
+            else:
+                flash('City and state not found.')
         except:
             flash('There was a problem connecting to the geocoding API')
     return render_template('home.html', location_form = loc_form, trail_list = trail_dictionary)
@@ -32,7 +34,7 @@ def show_extra():
     #Using a global variable to store the trails so we can minimize API calls while still using the data accross different pages.
     global trail_dictionary 
 
-    #This is the same code from hello(), because we're adding to that page and want to keep its origional functionality.
+    #This is the same code from home(), because we're adding to that page and want to keep its origional functionality.
     loc_form = LocationInputForm()
     if loc_form.validate_on_submit():
         location_name = loc_form.city.data + ', ' + loc_form.state.data

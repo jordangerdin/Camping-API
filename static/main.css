@@ -1,3 +1,9 @@
+:root {
+    --main-color: rgb(255, 193, 68);
+    --color-sidebar: #56a31e;
+    --color-accent: #F5DB4E;
+  }  
+
 body{
     margin: 0;
 }
@@ -12,6 +18,8 @@ body{
 
 .dummy-column{
     width: 15%;
+    height: 100%;
+    background-color: var(--color-sidebar);
     padding: 1em;
     font-size: 1.25em;
 }
@@ -20,7 +28,7 @@ body{
     position: absolute;
     width: 15%;
     height: 100%;
-    background-color: lightsalmon;
+    background-color: var(--color-sidebar);
     padding: 1em;
     font-size: 1.25em;
     font-weight: 500;
@@ -35,6 +43,7 @@ a, a:visited {
 }
 
 table {
+    background-color: var(--color-accent);
     border-collapse: collapse;
     width: 100%;
   }
@@ -45,13 +54,13 @@ th, td {
   }
 
 tr:nth-child(even) {
-    background-color: lightsalmon;
+    background-color: var(--main-color);
 }
 
 button, .btn {
     padding: .25em;
     transition-duration: 0.4s;
-    background-color: lightsalmon;
+    background-color: var(--color-accent);
     border: none;
     text-align: center;
     text-decoration: none;

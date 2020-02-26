@@ -54,15 +54,3 @@ def get_lat_lon(place_name):
         return lat_lon['results'][0]['geometry']
     else:
         return None
-
-#test_place_name = 'Minneapolis, MN'
-#print(get_lat_lon(test_place_name))
-
-"""test_lat = 44.97997
-test_lon = -93.26384
-
-# The method used to open the map image. PIL must be imported to do this.
-
-map_img = Image.open(get_map(test_lat, test_lon))
-map_img.show()
-"""
