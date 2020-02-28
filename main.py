@@ -1,17 +1,18 @@
-from api_connection import *
-from PIL import Image
+from view import *
+from sql_database.database import SQLTrailDB
+from view.view import View
+from view_model import ViewModel
 
-location_name = input('Please enter the city you would like to go hiking by in city, state format.')
-coord = get_lat_lon(location_name)
+def main():
+    
+    trailsDB = SQLTrailDB
+    
+    trailsViewModel = ViewModel(trailsDB)
 
-return_str = ''
-return_str += get_hiking_data(coord['lat'], coord['lng'])['trails'][0]['name'] + '\n'
+    # Should be replaced by frontend HTML
+    trailsView = View(trailsViewModel)
 
-trail_lat =  get_hiking_data(coord['lat'], coord['lng'])['trails'][0]['latitude']
-trail_lon =  get_hiking_data(coord['lat'], coord['lng'])['trails'][0]['longitude']
+    trailsView.add_new_trail()
 
-return_str += get_weather_data(trail_lat, trail_lon)['list'][0]['weather'][0]['main'] + '\n'
-map_image = Image.open(get_map(trail_lat, trail_lon))
-
-print(return_str)
-map_image.show()
+if __name__ == '__main__':
+    main()

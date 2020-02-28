@@ -24,4 +24,4 @@ class Bookmarks(BaseModel):
     condition_details = CharField()
 
 db.connect()
-db.create_tables(Bookmarks)
+db.create_tables([Bookmarks])
