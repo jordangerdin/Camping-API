@@ -24,9 +24,9 @@ def home():
             if coord is not None:
                 trail_dictionary = get_hiking_data(coord['lat'], coord['lng'])['trails']
             else:
-                flash('City and state not found.')
+                flash('City and state not found.', 'error')
         except:
-            flash('There was a problem connecting to the geocoding API')
+            flash('There was a problem connecting to the geocoding API', 'error')
     return render_template('home.html', location_form = loc_form, trail_list = trail_dictionary)
 
 @app.route('/show_extra', methods=['POST'])
@@ -43,30 +43,34 @@ def show_extra():
             if coord is not None:
                 trail_dictionary = get_hiking_data(coord['lat'], coord['lng'])['trails']
             else:
-                flash('test')
+                flash('City and state not found.', 'error')
         except:
-            flash('There was a problem connecting to the geocoding API ' + location_name + 'test')
+            flash('There was a problem connecting to the geocoding API', 'error')
+  
+    if(request.form.get('trail_select')):
+        # Getting the lat and long of the trail
+        trail_id = request.form.get('trail_select')
+        for trail in trail_dictionary:
+            if int(trail['id']) == int(trail_id):
+                trail_lat  = trail['latitude']
+                trail_lon  = trail['longitude']
+                trail_name = trail['name']
 
-    # Getting the lat and long of the trail
-    trail_id = request.form.get('trail_select')
-    for trail in trail_dictionary:
-        if int(trail['id']) == int(trail_id):
-            trail_lat  = trail['latitude']
-            trail_lon  = trail['longitude']
-            trail_name = trail['name']
-
-    # The show weather set up. Makes an API call to get the weather for the next ten days and feeds that to the page
-    if request.form['submit_button'] == 'show_weather':
-        weather_data = get_weather_data(trail_lat, trail_lon)
-        for time in weather_data['list']:
-            time['dt'] = datetime.fromtimestamp(time['dt'])
-            time['main']['temp'] = k_to_f(time['main']['temp'])
-        return render_template('show_weather.html', weather_list = weather_data, location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
-
-    # The show map set up 
+        # The show weather set up. Makes an API call to get the weather for the next ten days and feeds that to the page
+        if request.form['submit_button'] == 'show_weather':
+            weather_data = get_weather_data(trail_lat, trail_lon)
+            for time in weather_data['list']:
+                time['dt'] = datetime.fromtimestamp(time['dt'])
+                time['main']['temp'] = k_to_f(time['main']['temp'])
+            return render_template('show_weather.html', weather_list = weather_data, location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
+        else:
+            # The show map set up  
+            return render_template('show_map.html', lat = trail_lat, lon = trail_lon, key = os.environ.get('MAP_KEY'), location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
     else:
-        return render_template('show_map.html', lat = trail_lat, lon = trail_lon, key = os.environ.get('MAP_KEY'), location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
+        flash('Please select a trail', 'error')
 
+    #rerenders the homepage 
+    return render_template('home.html', location_form = loc_form, trail_list = trail_dictionary)
 
 def k_to_f(kelvin):
     # A helpter function to make the weather's temperature data into a unit that Americans know what to do with.
