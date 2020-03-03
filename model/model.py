@@ -11,17 +11,17 @@ class BaseModel(Model):
 class Bookmarks(BaseModel):
     trail_id = IntegerField()
     name = CharField()
-    trail_type = CharField()
-    difficulty = CharField()
-    stars = FloatField()
-    location = CharField()
+    trail_type = CharField(null=True)
+    difficulty = CharField(null=True)
+    stars = FloatField(null=True)
+    location = CharField(null=True)
     url = CharField()
-    length = FloatField()
-    ascent = FloatField()
-    descent = FloatField()
-    longitude = FloatField()
-    latitude = FloatField()
-    condition_details = CharField()
+    length = FloatField(null=True)
+    ascent = FloatField(null=True)
+    descent = FloatField(null=True)
+    longitude = FloatField(null=True)
+    latitude = FloatField(null=True)
+    condition_details = CharField(null=True)
 
     def __str__(self):
         return f'ID {self.id}, Name: {self.name}'

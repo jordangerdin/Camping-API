@@ -3,11 +3,15 @@ from api_connection import *
 from forms import LocationInputForm
 from datetime import datetime
 import os
+import view_model
+from model.model import Bookmarks
+from sql_database.database import SQLTrailDB
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'blargitsasecretthatdoesntmatterforthiscontext'
 
 trail_dictionary = {}
+trailsDB = SQLTrailDB
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/find_trails', methods=['GET', 'POST'])
@@ -48,13 +52,23 @@ def show_extra():
             flash('There was a problem connecting to the geocoding API', 'error')
   
     if(request.form.get('trail_select')):
-        # Getting the lat and long of the trail
+        # Getting the trail's info
         trail_id = request.form.get('trail_select')
         for trail in trail_dictionary:
             if int(trail['id']) == int(trail_id):
+                trail_id = trail['id']
+                trail_name = trail['name']
+                trail_type = trail['type']
+                trail_difficulty = trail['difficulty']
+                trail_stars = trail['stars']
+                trail_location = trail['location']
+                trail_url = trail['url']
+                trail_length = trail['length']
+                trail_ascent = trail['ascent']
+                trail_descent = trail['descent']
                 trail_lat  = trail['latitude']
                 trail_lon  = trail['longitude']
-                trail_name = trail['name']
+                trail_condition_details = trail['conditionDetails']
 
         # The show weather set up. Makes an API call to get the weather for the next ten days and feeds that to the page
         if request.form['submit_button'] == 'show_weather':
@@ -63,6 +77,16 @@ def show_extra():
                 time['dt'] = datetime.fromtimestamp(time['dt'])
                 time['main']['temp'] = k_to_f(time['main']['temp'])
             return render_template('show_weather.html', weather_list = weather_data, location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
+
+        elif request.form['submit_button'] == 'save_trail':
+            # saving a trail 
+            trailsViewModel = view_model.ViewModel(trailsDB)
+
+            trail = Bookmarks(trail_id = trail_id, name = trail_name, trail_type=trail_type, difficulty=trail_difficulty, stars=trail_stars, location=trail_location, url=trail_url, length=trail_length, ascent=trail_ascent, descent=trail_descent, longitude=trail_lon, latitude=trail_lat, condition_details=trail_condition_details)
+
+            trailsViewModel.insertTrail(trail=trail)
+
+            flash(f'{trail_name} has been saved!', 'success')
         else:
             # The show map set up  
             return render_template('show_map.html', lat = trail_lat, lon = trail_lon, key = os.environ.get('MAP_KEY'), location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name)
