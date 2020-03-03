@@ -101,6 +101,8 @@ def show_extra():
             trailsViewModel.deleteTrail(trail_id)
 
             flash('Trail has been deleted!', 'success')
+            
+            trail_dictionary = trailsViewModel.getTrails()
 
         else:
             # The show map set up  

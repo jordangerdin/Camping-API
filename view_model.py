@@ -12,5 +12,5 @@ class ViewModel:
         query = Bookmarks.select().dicts()
         return query
 
-    def deleteTrail(self, bookmark_id):
-        Bookmarks.delete().where(Bookmarks.id == bookmark_id).execute()
+    def deleteTrail(self, trail_id):
+        Bookmarks.delete().where(Bookmarks.trail_id == trail_id).execute()
