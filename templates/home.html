@@ -22,22 +22,26 @@
                     {% for trail in trail_list %}
                         <tr>
                             <td>{{trail.name}}</td>
-                            <td>{{trail.type}}</td>
+                            <td>{{trail.trail_type}}</td>
                             <td>{{trail.difficulty}}</td>
                             <td>{{trail.stars}}</td>
                             <td>{{trail.location}}</td>
                             <td>{{trail.length}}</td>
                             <td>{{trail.ascent}}</td>
                             <td>{{trail.descent}}</td>
-                            <td>{{trail.conditionDetails}}</td>
-                            <td><input type="radio" id="{{trail.id}}" value="{{trail.id}}" name="trail_select"></td>
+                            <td>{{trail.condition_details}}</td>
+                            <td><input type="radio" id="{{trail.trail_id}}" value="{{trail.trail_id}}" name="trail_select"></td>
                             <td><a href="{{trail.url}}">X</a></td>
                         </tr>
                     {% endfor %}
                 </table>
                 <button name="submit_button" value="show_map"     type="Submit"> Show Map </button>
                 <button name="submit_button" value="show_weather" type="Submit"> Show Weather </button>
-                <button name="submit_button" value="save_trail"   type="Submit"> Save Trail </button>
+                {% if view_saved == True %}
+                    <button name="submit_button" value="delete_trail"   type="Submit"> Delete Trail </button>
+                {% else %}
+                    <button name="submit_button" value="save_trail"   type="Submit"> Save Trail </button>
+                {% endif %}
             {% endif %}
         </form>
         {% block show_weather %}{% endblock show_weather %}

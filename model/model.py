@@ -23,8 +23,5 @@ class Bookmarks(BaseModel):
     latitude = FloatField(null=True)
     condition_details = CharField(null=True)
 
-    def __str__(self):
-        return f'ID {self.id}, Name: {self.name}'
-
 db.connect()
 db.create_tables([Bookmarks])
