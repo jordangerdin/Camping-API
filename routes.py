@@ -81,12 +81,20 @@ def show_extra():
             return render_template('show_weather.html', weather_list = weather_data, location_form = loc_form, trail_list = trail_dictionary, trail_name = trail_name, view_saved = False)
 
         elif request.form['submit_button'] == 'save_trail':
-            # saving a trail
-            trail = Bookmarks(trail_id = trail_id, name = trail_name, trail_type=trail_type, difficulty=trail_difficulty, stars=trail_stars, location=trail_location, url=trail_url, length=trail_length, ascent=trail_ascent, descent=trail_descent, longitude=trail_lon, latitude=trail_lat, condition_details=trail_condition_details)
+            # saving a trail. First ensures the trail is not already in the database, then saves or errors.
+            already_saved = False
+            previously_saved = trailsViewModel.getTrails()
+            for trail in previously_saved:
+                if trail['trail_id'] == trail_id:
+                    already_saved = True
+            if already_saved != True:
+                trail = Bookmarks(trail_id = trail_id, name = trail_name, trail_type=trail_type, difficulty=trail_difficulty, stars=trail_stars, location=trail_location, url=trail_url, length=trail_length, ascent=trail_ascent, descent=trail_descent, longitude=trail_lon, latitude=trail_lat, condition_details=trail_condition_details)
 
-            trailsViewModel.insertTrail(trail=trail)
+                trailsViewModel.insertTrail(trail=trail)
 
-            flash(f'{trail_name} has been saved!', 'success')
+                flash(f'{trail_name} has been saved!', 'success')
+            else:
+                flash(f'{trail_name} has already been saved.', 'error')
 
         elif request.form['submit_button'] == 'delete_trail':
             # deleting a trail
@@ -122,7 +130,9 @@ def view_saved():
             flash('There was a problem connecting to the geocoding API', 'error')
     return render_template('home.html', location_form = loc_form, trail_list = trail_dictionary, view_saved = True)
 
+
 def make_api_dict_keys_match_database_keys(trail_dict):
+    # Makes the two types of dictionaries interally consistant.
     for trail in trail_dict:
         trail['trail_id'] = trail.pop('id')
         trail['trail_type'] = trail.pop('type')
