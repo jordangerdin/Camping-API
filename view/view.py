@@ -11,9 +11,9 @@ class View:
         coord = get_lat_lon(input('Enter a location to search: '))
         trail_data = get_hiking_data(coord['lat'], coord['lng'])['trails'][0]
 
-        id = trail_data['id']
+        trail_id = trail_data['id']
         name = trail_data['name']
-        trailtype = trail_data['type']
+        trail_type = trail_data['type']
         difficulty = trail_data['difficulty']
         stars = trail_data['stars']
         location = trail_data['location']
@@ -25,7 +25,11 @@ class View:
         latitude = trail_data['latitude']
         condition_details = trail_data['conditionDetails']
 
-        self.view_model.insertTrail(id, name, trailtype, difficulty, stars, location, url, length, ascent, descent, longitude, latitude, condition_details)
+        trail = Bookmarks(trail_id=trail_id, name=name, trail_type=trail_type, difficulty=difficulty, stars=stars, location=location, url=url, length=length, ascent=ascent, descent=descent, longitude=longitude, latitude=latitude, condition_details=condition_details)
+
+        print(trail)
+
+        self.view_model.insertTrail(trail=trail)
 
     def get_user_input(self, message):
         return input(message)

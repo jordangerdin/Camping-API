@@ -1,10 +1,12 @@
+from model.model import Bookmarks
+
 class ViewModel:
     
     def __init__(self, db):
         self.db = db
 
-    def insertTrail(self, id, name, trailtype, difficulty, stars, location, url, length, ascent, descent, longitude, latitude, condition_details):
-        self.db.insert_trail(id, name, trailtype, difficulty, stars, location, url, length, ascent, descent, longitude, latitude, condition_details)
+    def insertTrail(self, trail):
+        Bookmarks.save(trail)
 
-    def deleteTrail(self, id):
-        self.db.remove_trail(id)
+    def deleteTrail(self, bookmark_id):
+        Bookmarks.delete().where(Bookmarks.id == bookmark_id).execute()
