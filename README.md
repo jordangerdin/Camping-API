@@ -14,3 +14,4 @@ You can also save a location and bookmark it for later, and view all the trails 
 
 After getting everything from requirements.txt, in your terminal type "set FLASK_APP=main.py" (windows) or export "FLASK_APP=routes.py"(mac/linux)
 then type "flask run". It should say a server is running on http://127.0.0.1:5000. Go to that URL and you should be able to use the app.
+You will also need to save API keys for the listed APIs in a file called .env at the root of the directory.
