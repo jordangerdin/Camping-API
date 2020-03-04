@@ -1,18 +1,6 @@
-from view import *
-from sql_database.database import SQLTrailDB
-from view.view import View
-from view_model import ViewModel
+from flask import Flask
 
-def main():
-    
-    trailsDB = SQLTrailDB
-    
-    trailsViewModel = ViewModel(trailsDB)
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'blargitsasecretthatdoesntmatterforthiscontext'
 
-    # Should be replaced by frontend HTML
-    trailsView = View(trailsViewModel)
-
-    trailsView.add_new_trail()
-
-if __name__ == '__main__':
-    main()
+import routes

@@ -6,9 +6,7 @@ import os
 import view_model
 from model.model import Bookmarks
 from sql_database.database import SQLTrailDB
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'blargitsasecretthatdoesntmatterforthiscontext'
+from main import app
 
 trail_dictionary = {}
 trailsDB = SQLTrailDB
@@ -101,7 +99,7 @@ def show_extra():
             trailsViewModel.deleteTrail(trail_id)
 
             flash('Trail has been deleted!', 'success')
-            
+
             trail_dictionary = trailsViewModel.getTrails()
 
         else:
