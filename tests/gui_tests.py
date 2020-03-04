@@ -15,8 +15,6 @@ from routes import *
 # we got the idea to put the database into memory from the Peewee documentation.
 test_db = SqliteDatabase(':memory:')
 
-
-
 class TestRoutes(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
@@ -31,7 +29,8 @@ class TestRoutes(unittest.TestCase):
         trailsViewModel = view_model.ViewModel(trailsDB)
 
     def tearDown(self):
-        test_db.drop_tables(Bookmarks)
+        trail_dictionary = {}
+        Bookmarks.drop_table()
         test_db.close()
 
     def add_test_data(self):
@@ -40,12 +39,10 @@ class TestRoutes(unittest.TestCase):
         self.trail3 = Bookmarks.create(trail_id = 'l24j23lj', name = 'A Hidious Trail', trail_type='Hiking', difficulty='Red', stars='-5', location='Somewhere awful', url='https://www.trailinfo.com/dear_god_why', length=55, ascent=-4, descent=13, longitude=123, latitude=50, condition_details='It\'s even worse then you feared')
 
     def test_empty_database(self):
-        page = self.app.get('/find_trails')
-        #print (page.data)
-        assert b'No Trails.' in page.data
-        
-
         page = self.app.get('/view_saved')
+        assert b'No Trails.' in page.data
+
+        page = self.app.get('/find_trails')
         assert b'No Trails.' in page.data
 
     def test_view_saved_trails(self):
@@ -68,12 +65,7 @@ class TestRoutes(unittest.TestCase):
         trailsViewModel.deleteTrail('11l23j1')
         page = self.app.get('/view_saved')
         assert b'A Beautiful Trail' not in page.data
-        assert b'A Less Beautiful Trail' in page.data
-    
-
-    
-        
-
+        assert b'A Less Beautiful Trail' in page.data 
 
         
     """ Commented out becaue I cannot find how to get past the loc_form.validate_on_submit()
@@ -87,7 +79,26 @@ class TestRoutes(unittest.TestCase):
         mock_get_lat_lon = mock_lat_lon_responce['results'][0]['geometry']
 
         page = self.app.post('/find_trails', data=dict(city='Test City', state='TS'), follow_redirects=True)
-        assert b'Bear Peak Out and Back' in page.data"""
+        assert b'Bear Peak Out and Back' in page.data
+        
+    Tests I would write if I could:
+        
+        give lat_lon api bad city/state
+        give hiking api bad lat/lon
+
+        get weather
+        get weather no selection
+
+        I don't know how to write tests for the map even more then I don't know how to write tests for the forms but
+            get map
+            get map no selection 
+        
+        save trail using the save button
+        delete trail using the delete button
+
+        try saving no selection
+        try deleting no selection
+        """
 
 if __name__ == '__main__':
     unittest.main()
