@@ -1,15 +1,9 @@
-import os
-#import book_wishlist
-#from book_wishlist import app
 from main import app
 import unittest
-import tempfile
 from model.model import Bookmarks
 from unittest import TestCase
 from peewee import *
 import api_connection
-from unittest.mock import patch
-from flask import request
 from routes import *
 
 # we got the idea to put the database into memory from the Peewee documentation.
