@@ -1,0 +1,20 @@
+<!-- The weather table  -->
+
+{% extends "home.html" %}
+{% block show_weather %}
+<h1>Weather on {{trail_name}} over the next five days.</h1> 
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Temp</th>
+        <th>Weather</th>
+    </tr>
+    {% for time in weather_list.list %}
+        <tr>
+            <td>{{time.dt}}</td>
+            <td>{{time.main.temp}}°F</td>
+            <td>{{time.weather[0].description}}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock show_weather %}  

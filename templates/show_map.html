@@ -1,0 +1,17 @@
+
+<!-- The area map  -->
+
+{% extends "home.html" %}
+{% block show_map %} 
+<h1>Map of the area around {{trail_name}}</h1>
+    <div id='map'></div>
+    <script>
+        mapboxgl.accessToken = '{{key}}'
+        var map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+            center: [{{lon}}, {{lat}}], // starting position [lng, lat]
+            zoom: 12 // starting zoom
+        });
+    </script>    
+{% endblock show_map %}  

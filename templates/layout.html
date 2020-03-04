@@ -1,0 +1,34 @@
+<!--The base layout for the site. Has a place for flash messages to appear for the user and a sidebar that's rather lacking in content.-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+        <script src="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js"></script>
+        <link href="https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        <title>
+            The Hiking App!
+        </title>
+    </head>
+    <body>
+        <div class="page">
+            <div class = "sidebar column">
+                <div class="sidebar-link"><a href="{{ url_for('home') }}">Find Hiking Trails</a></div>
+                <div class="sidebar-link"><a href="{{ url_for('view_saved') }}">View Saved Trails</a></div>
+            </div>
+            <div class="dummy-column column"> . </div>
+            <div class="content-column column">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="{{category}}">{{message}}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+
+</html>
