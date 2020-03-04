@@ -83,3 +83,10 @@ button:hover, .btn:hover {
     background-color: red;
     font-weight: bold;
 }
+
+.success{
+    padding: .5em;
+    font-size: 1.3em;
+    background-color: green;
+    font-weight: bold;
+}
