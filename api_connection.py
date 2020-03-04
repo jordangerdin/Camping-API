@@ -31,19 +31,6 @@ def get_weather_data(lat, lon):
 
     return weather_data
 
-def get_map(lat, lon):
-    # method for getting a map. Does not use the get_API_data method as the responce is not JSON
-    # information on getting images from an API found here:
-        # www.dev2qa.com/how-to-download-image-file-from-url-use-python-requests-or-wget-module/
-    key = os.getenv('MAP_KEY')
-    params = {'access_token' : key}
-    url = f'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/{lon},{lat},13,0,0/600x600'
-
-    map_image = requests.get(url, params, stream=True) 
-    map_image.raw.decode_content = True
-
-    return map_image.raw
-
 def get_lat_lon(place_name):
     # method for getting the lat and long from a place name.
     key = os.getenv('GEOCODING_KEY')
