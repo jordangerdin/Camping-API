@@ -24,13 +24,15 @@ def home():
         location_name = loc_form.city.data + ', ' + loc_form.state.data
         try:
             coord = get_lat_lon(location_name)
-            if coord is not None:
+            if coord['lat'] is not None:
                 trail_dictionary = get_hiking_data(coord['lat'], coord['lng'])['trails']
                 make_api_dict_keys_match_database_keys(trail_dictionary)
             else:
                 flash('City and state not found.', 'error')
+        except IndexError:
+            flash('City and state not found.', 'error')
         except:
-            flash('There was a problem connecting to the geocoding API', 'error')
+            flash('There was an error conecting to the Geocoding API.', 'error')
     return render_template('home.html', location_form = loc_form, trail_list = trail_dictionary, view_saved = False)
 
 @app.route('/show_extra', methods=['POST'])
