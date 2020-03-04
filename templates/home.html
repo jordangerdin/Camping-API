@@ -42,6 +42,8 @@
                 {% else %}
                     <button name="submit_button" value="save_trail"   type="Submit"> Save Trail </button>
                 {% endif %}
+            {% else %}
+            <p>No Trails.</p>
             {% endif %}
         </form>
         {% block show_weather %}{% endblock show_weather %}

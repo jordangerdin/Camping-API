@@ -1,9 +1,7 @@
 env/
 .vscode
-<<<<<<< HEAD
 __pycache__/
 __pycache__/api_connection.cpython-37.pyc
-=======
 .env
 __pycache__
->>>>>>> master
+
